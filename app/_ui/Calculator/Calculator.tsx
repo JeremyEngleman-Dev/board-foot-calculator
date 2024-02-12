@@ -1,9 +1,14 @@
-import styles from "./Calculator.module.css";
+"use client"
 
-export const Calculator = () => {
+import styles from "./Calculator.module.css";
+import { useState } from "react";
+
+const Calculator = () => {
+    const [boards, setBoards] = useState([]);
+
     return (
-        <div id={styles.Calculator}>
-            <div id={styles.LeftControls}>
+        <form id={styles.Calculator}>
+            <div id={styles.ControlContainer}>
                 <div className={styles.Control}>
                     <label className={styles.Label}>Thickness</label>
                     <select className={styles.Dropdown}>
@@ -17,32 +22,29 @@ export const Calculator = () => {
                 </div>
                 <div className={styles.Control}>
                     <label className={styles.Label}>Width</label>
-                    <input className={styles.TextBox}/>
-                    <select className={styles.Dropdown}>
-                        <option value="in">in</option>
-                        <option value="ft">ft</option>
-                    </select>
+                    <input className={styles.TextBox} type="text" maxLength={5} />
+                    <label className={styles.LabelAlt}>ft</label>
+                    <input className={styles.TextBox} type="text" maxLength={5} />
+                    <label className={styles.LabelAlt}>in</label>
                 </div>
                 <div className={styles.Control}>
                     <label className={styles.Label}>Length</label>
-                    <input className={styles.TextBox}/>
-                    <select className={styles.Dropdown}>
-                        <option value="in">in</option>
-                        <option value="ft">ft</option>
-                    </select>
+                    <input className={styles.TextBox} type="text" maxLength={5} />
+                    <label className={styles.LabelAlt}>ft</label>
+                    <input className={styles.TextBox} type="text" maxLength={5} />
+                    <label className={styles.LabelAlt}>in</label>
                 </div>
-            </div>
-            <div id={styles.RightControls}>
                 <div className={styles.Control}>
                     <label className={styles.Label}>Price</label>
-                    <input className={styles.TextBox}/>
+                    <input className={styles.TextBox} type="text" maxLength={5} />
                 </div>
                 <div className={styles.Control}>
                     <label className={styles.Label}>Count</label>
-                    <input className={styles.TextBox}/>
+                    <input className={styles.TextBox} type="text" maxLength={5} />
                 </div>
+                <button id={styles.AddButton}>Add</button>    
             </div>
-        </div>
+        </form>
     )
 }
 

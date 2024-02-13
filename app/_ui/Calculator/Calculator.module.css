@@ -2,7 +2,7 @@
     background-color: rgba(19, 13, 3, 0.804);
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: auto;
     max-width: var(--max-width);
     height: auto;
     padding: 10px;

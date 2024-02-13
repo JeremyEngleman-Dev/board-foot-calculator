@@ -5,5 +5,13 @@
   margin: 0px;
   padding: 10px;
   width: 100%;
-  height: 100vh;
+  height: auto;
+}
+
+#MainWindow {
+  display: flex;
+  flex-direction: column;
+  width: var(--width);
+  max-width: var(--max-width);
+  height: 100%;
 }

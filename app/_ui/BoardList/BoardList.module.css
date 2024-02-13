@@ -1,0 +1,18 @@
+#BoardListContainer {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    width: auto;
+    max-width: var(--max-width);
+    height: auto;
+    padding: 10px;
+}
+
+.Board {
+    background-color: rgba(19, 13, 3, 0.804);
+    margin-block: 2px;
+    width: auto;
+    padding-inline: 10px;
+    color: white;
+    font-size: 16px;
+}

@@ -1,20 +1,28 @@
 #TotalContainer {
     background-color: rgba(19, 13, 3, 0.804);
     display: flex;
-    flex-direction: column;
-    width: 100%;
+    width: auto;
     max-width: var(--max-width);
     height: auto;
     padding: 10px;
 }
 
 #Total {
-    display:flex;
-    align-items: center;
-    margin-block: 4px;
+    display: flex;
+    margin: 0px;
+    padding: 0px;
 }
 
-.Label {
+.Label1 {
+    display: flex;
+    flex: 1;
+    justify-content: flex-end;
+    font-size: 18px;
+    color: white;
+    width: 100px;
+}
+
+.Label2 {
     display: flex;
     justify-content: center;
     font-size: 18px;

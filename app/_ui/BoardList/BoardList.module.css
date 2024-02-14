@@ -10,9 +10,35 @@
 
 .Board {
     background-color: rgba(19, 13, 3, 0.804);
+    display: flex;
     margin-block: 2px;
     width: auto;
+    height: 30px;
     padding-inline: 10px;
     color: white;
     font-size: 16px;
 }
+
+    .BoardSize {
+        display: flex;
+        align-items: center;
+        margin: 0px;
+        flex: 1;
+        font-size: 14px;
+    }
+
+    .BoardCount {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0px;
+        width: 100px;
+    }
+
+    .BoardPrice {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0px;
+        width: 100px;
+    }

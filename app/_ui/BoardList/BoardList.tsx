@@ -4,16 +4,9 @@ const BoardList = () => {
     return (
         <div id={styles.BoardListContainer}>
             <div className={styles.Board}>
-                <p>List</p>
-            </div>
-            <div className={styles.Board}>
-                <p>List</p>
-            </div>
-            <div className={styles.Board}>
-                <p>List</p>
-            </div>
-            <div className={styles.Board}>
-                <p>List</p>
+                <p className={styles.BoardSize}>Width x Length x 4/4</p>
+                <p className={styles.BoardCount}>count</p>
+                <p className={styles.BoardPrice}>price</p>
             </div>
         </div>
     )

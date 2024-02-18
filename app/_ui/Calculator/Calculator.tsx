@@ -1,21 +1,25 @@
 "use client"
 
 import styles from "./Calculator.module.css";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
+import { ThicknessOption, Board } from "../../_data/definitions";
+
+const defaultValue: Board = {thickness: "4/4", widthFT: "", widthIN: "", lengthFT: "", lengthIN: "", price: "", count: 1}
 
 const Calculator = () => {
-    const [thickness, setThickness] = useState<Array<string>>(["4/4","5/4","6/4","8/4","10/4","12/4"]);
-    const [widthFT, setWidthFT] = useState([]);
-    const [widthIN, setWidthIN] = useState([]);
-    const [lengthFT, setLengthFT] = useState([]);
-    const [lengthIN, setLengthIN] = useState([]);
-    const [price, setPrice] = useState([]);
-    const [count, setCount] = useState([]);
+    const [board, setBoard] = useState<Board>(defaultValue);
+    let optionCount = 1;
 
-    const handleThicknessChange = (event: ChangeEvent<HTMLInputElement>) => {setThickness(event.target.value)};
-
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        setBoard(defaultValue);
+    }
+
+    const handleChange = (event: ChangeEvent<any>) => {
+        if(event.target.value !== ""){
+            if(event.target.value > 999){return;};
+        };
+        setBoard((value) => ({...value,[event.target.name]: event.target.value}));
     }
 
     return (
@@ -23,31 +27,36 @@ const Calculator = () => {
             <div id={styles.ControlContainer}>
                 <div className={styles.Control}>
                     <label className={styles.Label}>Thickness</label>
-                    <select className={styles.Dropdown}>
-                        {thickness.map((e) => <option value={e}>{e}</option>)}
+                    <select className={styles.Dropdown} name="thickness" value={board.thickness} onChange={handleChange}>
+                        <option>4/4</option>
+                        <option>5/4</option>
+                        <option>6/4</option>
+                        <option>8/4</option>
+                        <option>10/4</option>
+                        <option>12/4</option>
                     </select>
                 </div>
                 <div className={styles.Control}>
                     <label className={styles.Label}>Width</label>
-                    <input className={styles.TextBox} value={widthFT} type="text" maxLength={5} />
+                    <input className={styles.TextBox} name="widthFT" value={board.widthFT} type="number" min="0" max="9999" onChange={handleChange} placeholder="0"/>
                     <label className={styles.LabelAlt}>ft</label>
-                    <input className={styles.TextBox} value={widthIN} type="text" maxLength={5} />
+                    <input className={styles.TextBox} name="widthIN" value={board.widthIN} type="number" min="0" max="9999" onChange={handleChange} placeholder="0"/>
                     <label className={styles.LabelAlt}>in</label>
                 </div>
                 <div className={styles.Control}>
                     <label className={styles.Label}>Length</label>
-                    <input className={styles.TextBox} value={lengthFT} type="text" maxLength={5} />
+                    <input className={styles.TextBox} name="lengthFT" value={board.lengthFT} type="number" min="0" max="9999" onChange={handleChange} placeholder="0"/>
                     <label className={styles.LabelAlt}>ft</label>
-                    <input className={styles.TextBox} value={lengthIN} type="text" maxLength={5} />
+                    <input className={styles.TextBox} name="lengthIN" value={board.lengthIN} type="number" min="0" max="9999" onChange={handleChange} placeholder="0"/>
                     <label className={styles.LabelAlt}>in</label>
                 </div>
                 <div className={styles.Control}>
                     <label className={styles.Label}>Price</label>
-                    <input className={styles.TextBox} value={count} type="text" maxLength={5} />
+                    <input className={styles.TextBox} id={styles.TextBoxPrice} name="price" value={board.price} type="number" min="0" max="9999" step="0.01" maxLength={5} onChange={handleChange} placeholder="0"/>
                 </div>
                 <div className={styles.Control}>
                     <label className={styles.Label}>Count</label>
-                    <input className={styles.TextBox} value={price} type="text" maxLength={5} />
+                    <input className={styles.TextBox} name="count" value={board.count} type="number" min="1" max="9999" onChange={handleChange} placeholder="0"/>
                 </div>
                 <button id={styles.AddButton}>Add</button>    
             </div>

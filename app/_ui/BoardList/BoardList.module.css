@@ -17,6 +17,15 @@
     padding-inline: 10px;
     color: white;
     font-size: 16px;
+    border-radius: var(--border-radius);
+}
+
+.Board:hover {
+    background-color: rgba(44, 34, 16, 0.804);
+}
+
+.Board:active {
+    background-color: rgba(44, 34, 16, 0.804);
 }
 
     .BoardSize {

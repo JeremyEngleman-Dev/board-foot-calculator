@@ -5,6 +5,7 @@
     max-width: var(--max-width);
     height: auto;
     padding: 10px;
+    border-radius: var(--border-radius);
 }
 
 #Total {

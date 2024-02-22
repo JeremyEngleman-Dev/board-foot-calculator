@@ -15,3 +15,13 @@
   max-width: var(--max-width);
   height: 100%;
 }
+
+#BoardListContainer {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  width: auto;
+  max-width: var(--max-width);
+  height: auto;
+  padding: 10px;
+}

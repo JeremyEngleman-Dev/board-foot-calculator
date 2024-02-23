@@ -2,8 +2,7 @@
 
 import styles from "./Calculator.module.css";
 import { ChangeEvent, FormEvent, FunctionComponent as FC, useState } from "react";
-import { Board, ThicknessOption, ThicknessOptions } from "../../_data/definitions";
-//import processData from "../../_data/processing";
+import { Board, ThicknessOptions } from "../../_data/definitions";
 
 const defaultValue: Board = {key: 0, thickness: "4/4", widthFT: 0, widthIN: 0, lengthFT: 0, lengthIN: 0, price: 0, count: 1, totalPrice: 0}
 
@@ -24,22 +23,20 @@ const Calculator: FC<Params> = ({saveBoard}) => {
     const getThicknessValue = (option: string) => {
         ThicknessOptions.forEach(item => {
             if(item.label == option){
-                //console.log(item.value);
                 return (item.value)}
         })
     }
 
     const calculatePrice = (board: Board) => {
-        const thickness: number = 1;
+        const thickness: any = ThicknessOptions.find(option => option.label == board.thickness);
         const Length: number = Math.round((Number(board.lengthFT*12) + Number(board.lengthIN))/12*1000)/1000;
         const Width: number = Number(board.widthFT*12) + Number(board.widthIN);
-        //console.log(`Thickness: ${thickness}`);
-        const rawTotal = (((Length * Width * thickness)/12)*board.price)*board.count;
+        const rawTotal = (((Length * Width * thickness.value)/12)*board.price)*board.count;
         board.totalPrice = parseFloat(rawTotal.toFixed(2));
         return (board);
     }
     calculatePrice(board);
-    
+
     const formSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 

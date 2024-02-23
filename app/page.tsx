@@ -25,7 +25,7 @@ export default function Home() {
   boardList.forEach(board => {
     calculateTotal += board.totalPrice;
   })
-  total = calculateTotal;
+  total = parseFloat(calculateTotal.toFixed(2));
   
   return (
     <main className={styles.main}>

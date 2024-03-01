@@ -2,16 +2,15 @@
 
 import styles from "./Calculator.module.css";
 import { ChangeEvent, FormEvent, FunctionComponent as FC, useState } from "react";
-import { Board, ThicknessOptions } from "../../_data/definitions";
-
-const defaultValue: Board = {key: 0, thickness: "4/4", widthFT: 0, widthIN: 0, lengthFT: 0, lengthIN: 0, price: 0, count: 1, totalPrice: 0}
+import { Board, defaultValue, ThicknessOptions } from "../../_data/definitions";
 
 interface Params {
     saveBoard: (board: Board) => void;
+    setBoardValues: Board;
 };
 
-const Calculator: FC<Params> = ({saveBoard}) => {
-    const [board, setBoard] = useState<Board>(defaultValue);
+const Calculator: FC<Params> = ({saveBoard, setBoardValues}) => {
+    const [board, setBoard] = useState<Board>(setBoardValues);
 
     const handleChange = (event: ChangeEvent<any>) => {
         if(event.target.value !== ""){

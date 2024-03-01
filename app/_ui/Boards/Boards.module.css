@@ -10,11 +10,12 @@
     border-radius: var(--border-radius);
 }
 
-.Board:hover {
+.Board:active {
     background-color: rgba(44, 34, 16, 0.804);
+    transform:scale(0.99);
 }
 
-.Board:active {
+.Selected {
     background-color: rgba(44, 34, 16, 0.804);
 }
 

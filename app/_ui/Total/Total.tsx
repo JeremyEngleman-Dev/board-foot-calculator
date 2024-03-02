@@ -1,16 +1,18 @@
 import styles from "./Total.module.css";
 import { FunctionComponent as FC } from "react";
 
-interface TheTotal{
-    total: string
+interface Total{
+    total: number
 }
 
-const Total: FC<TheTotal> = ({total}) => {
+const Total: FC<Total> = ({total}) => {
+    const boardPrice: string = String(total.toFixed(2));
+
     return (
         <div id={styles.TotalContainer}>
             <div id={styles.Total}>
-                <label className={styles.Label1}>Total:</label>
-                <label className={styles.Label2}>{`$${total}`}</label>
+                <label className={styles.Label}>Total:</label>
+                <label className={styles.TotalValue}>{`$${boardPrice}`}</label>
             </div>
         </div>
     )

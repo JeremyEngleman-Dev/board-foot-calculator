@@ -24,6 +24,4 @@ export const ThicknessOptions: ThicknessOption[] = [
     { label: "12/4", value: 3}
 ];
 
-export type SelectedBoard = number | undefined;
-
 export const defaultValue: Board = {key: 0, thickness: "4/4", widthFT: 0, widthIN: 0, lengthFT: 0, lengthIN: 0, price: 0, count: 1, totalPrice: 0}

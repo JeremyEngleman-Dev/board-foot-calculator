@@ -8,24 +8,43 @@
     color: white;
     font-size: 16px;
     border-radius: var(--border-radius);
+    user-select: none;
 }
 
-.Board:active {
-    background-color: rgba(44, 34, 16, 0.804);
-    transform:scale(0.99);
-}
+
 
 .Selected {
     background-color: rgba(44, 34, 16, 0.804);
+    transform:scale(1.03);
+    transition: all .05s ease-in-out;
 }
 
-    .BoardSize {
+    #BoardSize {
         display: flex;
-        align-items: center;
+        height: 100%;
         margin: 0px;
         flex: 1;
-        font-size: 14px;
+        align-items: center;
     }
+
+        .BoardSizeText {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            width: auto;
+            height: 100%;
+        }
+
+        .BoardSizeValues {
+            color:rgb(225, 127, 57);
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            width: auto;
+            height: 100%;
+            margin-right: 10px;
+            margin-left: 4px;
+        }
 
     .BoardCount {
         display: flex;
@@ -37,8 +56,9 @@
     }
 
     .BoardPrice {
+        color:rgb(225, 127, 57);
         display: flex;
-        justify-content: center;
+        justify-content: flex-end;
         align-items: center;
         margin: 0px;
         width: 80px;

@@ -2,32 +2,29 @@
 
 import styles from "./Boards.module.css";
 import { Board } from "../../_data/definitions";
-import { FunctionComponent as FC, useState, ComponentPropsWithRef } from "react";
+import { FunctionComponent as FC } from "react";
 import clsx from "clsx";
 
 interface aBoard {
     individualBoard: Board
-    setSelectedBoard: (key: number) => void
+    getSelectedBoard: (key: number) => void
     isSelected: boolean
 }
 
-type Props = ComponentPropsWithRef<"div">;
+const Boards: FC<aBoard> = ({individualBoard, isSelected, getSelectedBoard}) => {
+    let T = individualBoard.thickness; //Thickness
+    let W = ""; //Width
+    let H = ""; //Height
+    const boardPrice: string = String(Number(individualBoard.totalPrice).toFixed(2));
 
-const Boards: FC<aBoard> = ({individualBoard, setSelectedBoard, isSelected}) => {
-    const [board, setBoard] = useState<Board>(individualBoard);
-    const [selected, setSelected] = useState<boolean>(false);
+    individualBoard.widthFT !== 0 ? W += `${individualBoard.widthFT}ft ` : null;
+    individualBoard.widthIN !== 0 ? W += `${individualBoard.widthIN}in ` : null;
 
-    let Measurement: string = ``;
-    Measurement = Measurement + board.thickness;
-    Measurement = Measurement + " x ";
-    board.widthFT !== 0 ? Measurement += `${board.widthFT}ft ` : null;
-    board.widthIN !== 0 ? Measurement += `${board.widthIN}in ` : null;
-    Measurement = Measurement + "x ";
-    board.lengthFT !== 0 ? Measurement += `${board.lengthFT}ft ` : null;
-    board.lengthIN !== 0 ? Measurement += `${board.lengthIN}in` : null;
+    individualBoard.lengthFT !== 0 ? H += `${individualBoard.lengthFT}ft ` : null;
+    individualBoard.lengthIN !== 0 ? H += `${individualBoard.lengthIN}in` : null;
 
     const handleClick = () => {
-        setSelectedBoard(board.key);
+        getSelectedBoard(individualBoard.key);
     }
 
     return (
@@ -35,9 +32,16 @@ const Boards: FC<aBoard> = ({individualBoard, setSelectedBoard, isSelected}) => 
             [styles.Board]: true,
             [styles.Selected]: isSelected,
         })} onClick={handleClick}>
-            <p className={styles.BoardSize}>{Measurement}</p>
-            <p className={styles.BoardCount}>${board.price} x {board.count} = </p>
-            <p className={styles.BoardPrice}>${board.totalPrice}</p>
+            <div id={styles.BoardSize}>
+                <p className={styles.BoardSizeText}>T: </p>
+                <p className={styles.BoardSizeValues}>{T}</p>
+                <p className={styles.BoardSizeText}>W: </p>
+                <p className={styles.BoardSizeValues}>{W}</p>
+                <p className={styles.BoardSizeText}>H: </p>
+                <p className={styles.BoardSizeValues}>{H}</p>
+            </div>
+            <p className={styles.BoardCount}>${individualBoard.price} x {individualBoard.count} = </p>
+            <p className={styles.BoardPrice}>${boardPrice}</p>
         </div>
     )
 }

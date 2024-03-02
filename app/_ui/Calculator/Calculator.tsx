@@ -3,14 +3,17 @@
 import styles from "./Calculator.module.css";
 import { ChangeEvent, FunctionComponent as FC, MouseEvent } from "react";
 import { Board, ThicknessOptions } from "../../_data/definitions";
+import clsx from "clsx";
 
 interface Params {
     saveBoard: (board: Board) => void;
+    deleteBoard: (board: Board) => void;
+    cancelBoard: () => void;
     handleFieldChange: (event: ChangeEvent<any>) => void;
     board: Board;
 };
 
-const Calculator: FC<Params> = ({saveBoard, handleFieldChange, board}) => {
+const Calculator: FC<Params> = ({saveBoard, deleteBoard, cancelBoard, handleFieldChange, board}) => {
 
     const calculatePrice = (board: Board) => {
         const thickness: any = ThicknessOptions.find(option => option.label == board.thickness);
@@ -22,38 +25,23 @@ const Calculator: FC<Params> = ({saveBoard, handleFieldChange, board}) => {
     }
     calculatePrice(board);
 
-    const handleSubmit = (event: MouseEvent<HTMLButtonElement>) => {
+    const handleAdd = (event: MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        console.log((event.target as HTMLButtonElement).name);
-        switch((event.target as HTMLButtonElement).name){
-            case "Add":
-                break;
-            case "Edit":
-                break;
-            case "Delete":
-                break;
-            case "Clear":
-                break;
-            default:
-                break;
-        }
-    }
-
-    const checkEmptyFields = () => {
         if(board.widthFT == 0 && board.widthIN == 0){return;};
         if(board.lengthFT == 0 && board.lengthIN == 0){return;};
         if(board.price == 0){return;};
-    }
-/*     const formSubmit = (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
-        //Ignore empty fields
-        if(board.widthFT == 0 && board.widthIN == 0){return;};
-        if(board.lengthFT == 0 && board.lengthIN == 0){return;};
-        if(board.price == 0){return;};
-
         saveBoard(board);
-    } */
+    }
+
+    const handleDelete = (event: MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+        deleteBoard(board);
+    }
+
+    const handleCancel = (event: MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+        cancelBoard();
+    }
 
     return (
         <form id={styles.Calculator}>
@@ -86,17 +74,17 @@ const Calculator: FC<Params> = ({saveBoard, handleFieldChange, board}) => {
                 <div className={styles.Control}>
                     <label className={styles.Label}>Price</label>
                     <input className={styles.TextBox} id={styles.TextBoxPrice} name="price" value={board.price > 0 ? board.price : ""} type="number" min="0" max="999" step="0.01" maxLength={5} onChange={handleFieldChange} placeholder="0"/>
-                    <label className={styles.Label}>{`$${board.totalPrice}`}</label>
+                    <label className={styles.Label}>{`$${String(board.totalPrice.toFixed(2))}`}</label>
                 </div>
                 <div className={styles.Control}>
                     <label className={styles.Label}>Count</label>
                     <input className={styles.TextBox} name="count" value={board.count > 0 ? board.count : ""} type="number" min="1" max="999" onChange={handleFieldChange} placeholder="0"/>
                 </div>
                 <div className={styles.ButtonContainer}>
-                    <button className={styles.Button} name="Add" onClick={handleSubmit}>Add</button>
-                    <button className={styles.Button} name="Edit" onClick={handleSubmit}>Edit</button>
-                    <button className={styles.Button} name="Delete" onClick={handleSubmit}>Delete</button>
-                    <button className={styles.Button} name="Cancel" onClick={handleSubmit}>Cancel</button> 
+                    <button className={styles.Button} hidden={board.key == 0 ? false : true} name="Add" onClick={handleAdd}>Add</button>
+                    <button className={styles.Button} hidden={board.key == 0 ? true : false} name="Save" onClick={handleAdd}>Save</button>
+                    <button className={styles.Button} hidden={board.key == 0 ? true : false} name="Delete" onClick={handleDelete}>Delete</button>
+                    <button className={styles.Button} hidden={board.key == 0 ? true : false} name="Cancel" onClick={handleCancel}>Cancel</button> 
                 </div>
             </div>
         </form>

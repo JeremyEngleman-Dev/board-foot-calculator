@@ -5,14 +5,13 @@ import { useState, ChangeEvent } from "react";
 import Calculator from "./_ui/Calculator/Calculator";
 import Total from "./_ui/Total/Total";
 import Boards from "./_ui/Boards/Boards";
-import { Board, SelectedBoard, defaultValue } from "./_data/definitions";
+import { Board, defaultValue } from "./_data/definitions";
 
 let IDCount: number = 1;
 let total: number = 0;
 
 export default function Home() {
   const [boardList, setBoardList] = useState<Array<Board>>([]);
-  const [selectedBoard, setSelectedBoard] = useState<SelectedBoard>();
   const [board, setBoard] = useState<Board>(defaultValue);
 
   const handleFieldChange = (event: ChangeEvent<any>) => {
@@ -20,50 +19,70 @@ export default function Home() {
         if(event.target.value > 999){return;};
     };
     setBoard((value) => ({...value,[event.target.name]: event.target.value}));
-}
+  }
 
   const saveBoard = (board: Board) => {
     if(board.key === 0){
       board.key = IDCount;
       IDCount++;
-    };
-    setBoardList([...boardList, board]);
+      setBoardList([...boardList, board]);
+    } else {
+      const boardListEdit: Board[] = boardList.map(item => {
+        return item.key === board.key ? board : item;
+      })
+      setBoardList(boardListEdit);
+    }
+    setBoard(defaultValue);
   }
 
-  const getSelectedBoard = (selected: SelectedBoard) => {
-    if(selected == undefined){
-      return defaultValue;
-    } else {
-      const selectedBoardIndex = boardList.findIndex(item => item.key == selected);
-      return boardList[selectedBoardIndex];
-    }
+  const deleteBoard = (board: Board) => {
+    setBoardList(boardList.filter(item => item.key !== board.key));
+    setBoard(defaultValue);
+  }
+
+  const cancelBoard = () => {
+    setBoard(defaultValue);
+  }
+
+  const getSelectedBoard = (key: number) => {
+    const selectedBoardIndex = boardList.findIndex(item => item.key == key);
+    setBoard(boardList[selectedBoardIndex]);
   }
 
   const calculateTotalPrice = (boardList: Array<Board>) => {
-    let calculateTotal = 0;
+    let calculateTotal: number = 0;
     boardList.forEach(board => {
       calculateTotal += board.totalPrice;
     })
-    return parseFloat(calculateTotal.toFixed(2));
+    return calculateTotal;
   }
 
   return (
     <main className={styles.main}>
       <div id={styles.MainWindow}>
-        <Calculator saveBoard={saveBoard} handleFieldChange={handleFieldChange} board={board}/>
+        <div id={styles.Header}>
+          <h1 id={styles.HeaderText}>Board Foot Calculator</h1>
+        </div>
+        <Calculator 
+          saveBoard={saveBoard} 
+          deleteBoard={deleteBoard} 
+          cancelBoard={cancelBoard} 
+          handleFieldChange={handleFieldChange} 
+          board={board}
+        />
         <div id={styles.BoardListContainer}>
-          {boardList.map((board: Board) => {
+          {boardList.map((item) => {
             return (
               <Boards 
-                key={board.key} 
-                individualBoard={board} 
-                setSelectedBoard={setSelectedBoard}
-                isSelected={selectedBoard == board.key ? true : false}
+                key={item.key} 
+                individualBoard={item} 
+                getSelectedBoard={getSelectedBoard}
+                isSelected={board.key == item.key ? true : false}
               />
             )
           })}
         </div>
-        <Total total={JSON.stringify(calculateTotalPrice(boardList))}/>
+        <Total total={(calculateTotalPrice(boardList))}/>
       </div>
     </main>
   );

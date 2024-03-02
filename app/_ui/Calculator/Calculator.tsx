@@ -1,30 +1,16 @@
 "use client"
 
 import styles from "./Calculator.module.css";
-import { ChangeEvent, FormEvent, FunctionComponent as FC, useState } from "react";
-import { Board, defaultValue, ThicknessOptions } from "../../_data/definitions";
+import { ChangeEvent, FunctionComponent as FC, MouseEvent } from "react";
+import { Board, ThicknessOptions } from "../../_data/definitions";
 
 interface Params {
     saveBoard: (board: Board) => void;
-    setBoardValues: Board;
+    handleFieldChange: (event: ChangeEvent<any>) => void;
+    board: Board;
 };
 
-const Calculator: FC<Params> = ({saveBoard, setBoardValues}) => {
-    const [board, setBoard] = useState<Board>(setBoardValues);
-
-    const handleChange = (event: ChangeEvent<any>) => {
-        if(event.target.value !== ""){
-            if(event.target.value > 999){return;};
-        };
-        setBoard((value) => ({...value,[event.target.name]: event.target.value}));
-    }
-
-    const getThicknessValue = (option: string) => {
-        ThicknessOptions.forEach(item => {
-            if(item.label == option){
-                return (item.value)}
-        })
-    }
+const Calculator: FC<Params> = ({saveBoard, handleFieldChange, board}) => {
 
     const calculatePrice = (board: Board) => {
         const thickness: any = ThicknessOptions.find(option => option.label == board.thickness);
@@ -36,7 +22,29 @@ const Calculator: FC<Params> = ({saveBoard, setBoardValues}) => {
     }
     calculatePrice(board);
 
-    const formSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (event: MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+        console.log((event.target as HTMLButtonElement).name);
+        switch((event.target as HTMLButtonElement).name){
+            case "Add":
+                break;
+            case "Edit":
+                break;
+            case "Delete":
+                break;
+            case "Clear":
+                break;
+            default:
+                break;
+        }
+    }
+
+    const checkEmptyFields = () => {
+        if(board.widthFT == 0 && board.widthIN == 0){return;};
+        if(board.lengthFT == 0 && board.lengthIN == 0){return;};
+        if(board.price == 0){return;};
+    }
+/*     const formSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         //Ignore empty fields
@@ -45,15 +53,14 @@ const Calculator: FC<Params> = ({saveBoard, setBoardValues}) => {
         if(board.price == 0){return;};
 
         saveBoard(board);
-        setBoard(defaultValue);
-    }
+    } */
 
     return (
-        <form id={styles.Calculator} onSubmit={formSubmit}>
+        <form id={styles.Calculator}>
             <div id={styles.ControlContainer}>
                 <div className={styles.Control}>
                     <label className={styles.Label}>Thickness</label>
-                    <select className={styles.Dropdown} name="thickness" value={board.thickness} onChange={handleChange}>
+                    <select className={styles.Dropdown} name="thickness" value={board.thickness} onChange={handleFieldChange}>
                         <option>4/4</option>
                         <option>5/4</option>
                         <option>6/4</option>
@@ -64,28 +71,33 @@ const Calculator: FC<Params> = ({saveBoard, setBoardValues}) => {
                 </div>
                 <div className={styles.Control}>
                     <label className={styles.Label}>Width</label>
-                    <input className={styles.TextBox} name="widthFT" value={board.widthFT > 0 ? board.widthFT : ""} type="number" min="0" max="999" onChange={handleChange} placeholder="0"/>
+                    <input className={styles.TextBox} name="widthFT" value={board.widthFT > 0 ? board.widthFT : ""} type="number" min="0" max="999" onChange={handleFieldChange} placeholder="0"/>
                     <label className={styles.LabelAlt}>ft</label>
-                    <input className={styles.TextBox} name="widthIN" value={board.widthIN > 0 ? board.widthIN : ""} type="number" min="0" max="11" onChange={handleChange} placeholder="0"/>
+                    <input className={styles.TextBox} name="widthIN" value={board.widthIN > 0 ? board.widthIN : ""} type="number" min="0" max="11" onChange={handleFieldChange} placeholder="0"/>
                     <label className={styles.LabelAlt}>in</label>
                 </div>
                 <div className={styles.Control}>
                     <label className={styles.Label}>Length</label>
-                    <input className={styles.TextBox} name="lengthFT" value={board.lengthFT > 0 ? board.lengthFT : ""} type="number" min="0" max="999" onChange={handleChange} placeholder="0"/>
+                    <input className={styles.TextBox} name="lengthFT" value={board.lengthFT > 0 ? board.lengthFT : ""} type="number" min="0" max="999" onChange={handleFieldChange} placeholder="0"/>
                     <label className={styles.LabelAlt}>ft</label>
-                    <input className={styles.TextBox} name="lengthIN" value={board.lengthIN > 0 ? board.lengthIN : ""} type="number" min="0" max="11" onChange={handleChange} placeholder="0"/>
+                    <input className={styles.TextBox} name="lengthIN" value={board.lengthIN > 0 ? board.lengthIN : ""} type="number" min="0" max="11" onChange={handleFieldChange} placeholder="0"/>
                     <label className={styles.LabelAlt}>in</label>
                 </div>
                 <div className={styles.Control}>
                     <label className={styles.Label}>Price</label>
-                    <input className={styles.TextBox} id={styles.TextBoxPrice} name="price" value={board.price > 0 ? board.price : ""} type="number" min="0" max="999" step="0.01" maxLength={5} onChange={handleChange} placeholder="0"/>
+                    <input className={styles.TextBox} id={styles.TextBoxPrice} name="price" value={board.price > 0 ? board.price : ""} type="number" min="0" max="999" step="0.01" maxLength={5} onChange={handleFieldChange} placeholder="0"/>
                     <label className={styles.Label}>{`$${board.totalPrice}`}</label>
                 </div>
                 <div className={styles.Control}>
                     <label className={styles.Label}>Count</label>
-                    <input className={styles.TextBox} name="count" value={board.count > 0 ? board.count : ""} type="number" min="1" max="999" onChange={handleChange} placeholder="0"/>
+                    <input className={styles.TextBox} name="count" value={board.count > 0 ? board.count : ""} type="number" min="1" max="999" onChange={handleFieldChange} placeholder="0"/>
                 </div>
-                <button id={styles.AddButton}>Add</button>    
+                <div className={styles.ButtonContainer}>
+                    <button className={styles.Button} name="Add" onClick={handleSubmit}>Add</button>
+                    <button className={styles.Button} name="Edit" onClick={handleSubmit}>Edit</button>
+                    <button className={styles.Button} name="Delete" onClick={handleSubmit}>Delete</button>
+                    <button className={styles.Button} name="Cancel" onClick={handleSubmit}>Cancel</button> 
+                </div>
             </div>
         </form>
     )

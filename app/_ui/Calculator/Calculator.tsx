@@ -83,8 +83,8 @@ const Calculator: FC<Params> = ({saveBoard, deleteBoard, cancelBoard, handleFiel
                 <div className={styles.ButtonContainer}>
                     <button className={styles.Button} hidden={board.key == 0 ? false : true} name="Add" onClick={handleAdd}>Add</button>
                     <button className={styles.Button} hidden={board.key == 0 ? true : false} name="Save" onClick={handleAdd}>Save</button>
-                    <button className={styles.Button} hidden={board.key == 0 ? true : false} name="Delete" onClick={handleDelete}>Delete</button>
-                    <button className={styles.Button} hidden={board.key == 0 ? true : false} name="Cancel" onClick={handleCancel}>Cancel</button> 
+                    <button className={styles.Button} hidden={board.key == 0 ? true : false} name="Cancel" onClick={handleCancel}>Cancel</button>
+                    <button className={[styles.Button,styles.DeleteButton].join(" ")} hidden={board.key == 0 ? true : false} name="Delete" onClick={handleDelete}>Delete</button>
                 </div>
             </div>
         </form>

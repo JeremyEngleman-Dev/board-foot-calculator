@@ -93,3 +93,9 @@
                 border-radius: var(--border-radius);
             }
 
+            .DeleteButton {
+                position: absolute;
+                top: 0px;
+                right: 0px;
+            }
+

@@ -1,8 +1,8 @@
 "use client"
 
 import styles from "./Calculator.module.css";
-import { ChangeEvent, FunctionComponent as FC, MouseEvent } from "react";
-import { Board, ThicknessOptions } from "../../_data/definitions";
+import { ChangeEvent, FunctionComponent as FC, MouseEvent, useState } from "react";
+import { Board, ThicknessOptions, defaultBlankFieldValues } from "../../_data/definitions";
 import clsx from "clsx";
 
 interface Params {
@@ -14,6 +14,11 @@ interface Params {
 };
 
 const Calculator: FC<Params> = ({saveBoard, deleteBoard, cancelBoard, handleFieldChange, board}) => {
+    const [isFieldBlank, setIsFieldBlank] = useState({
+        width: false,
+        length: false,
+        price: false,
+    });
 
     const calculatePrice = (board: Board) => {
         const thickness: any = ThicknessOptions.find(option => option.label == board.thickness);
@@ -27,10 +32,17 @@ const Calculator: FC<Params> = ({saveBoard, deleteBoard, cancelBoard, handleFiel
 
     const handleAdd = (event: MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        if(board.widthFT == 0 && board.widthIN == 0){return;};
-        if(board.lengthFT == 0 && board.lengthIN == 0){return;};
-        if(board.price == 0){return;};
+        if(board.widthFT == 0 && board.widthIN == 0){
+            setIsFieldBlank(toggle => ({...toggle,width: true})); return;
+        };
+        if(board.lengthFT == 0 && board.lengthIN == 0){
+            setIsFieldBlank(toggle => ({...toggle,length: true})); return;
+        };
+        if(board.price == 0){
+            setIsFieldBlank(toggle => ({...toggle,price: true})); return;
+        };
         saveBoard(board);
+        setIsFieldBlank(defaultBlankFieldValues);
     }
 
     const handleDelete = (event: MouseEvent<HTMLButtonElement>) => {

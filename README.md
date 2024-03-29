@@ -11,4 +11,4 @@ Add boards to a list with a running total while you shop for that perfect projec
 
 Built in Next.js
 
-TRY ME!: https://vercel.com/jeremys-projects-dee3583d/board-foot-calculator/Fuw2fFksMiooC5piKacZJizt7CGF
+TRY ME!: https://board-foot-calculator-git-main-projects-10001.vercel.app/ 

@@ -4,13 +4,6 @@ Add boards to a list with a running total while you shop for that perfect projec
 
 <img width="600" height="723" alt="Board Foot Calculator" src="https://github.com/user-attachments/assets/200d8bbe-c054-4d8b-abf0-81299c33e8f5" />
 
---Future Goals--
--Add tooltips to fields
--Add button to clear list
--Board list retention using cookies with a lifetime of 24hrs
--Add indication of required fields (Must have a width value, a length value, and a price)
-
-
-Built in Next.js
+This is a project I started to learn frontend skills, and to learn about Next.js
 
 TRY ME!: https://board-foot-calculator-git-main-projects-10001.vercel.app/ 

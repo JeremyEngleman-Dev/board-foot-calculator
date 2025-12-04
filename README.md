@@ -2,6 +2,8 @@ Board Foot Calculator
 
 Add boards to a list with a running total while you shop for that perfect project hardwood
 
+<img width="600" height="723" alt="Board Foot Calculator" src="https://github.com/user-attachments/assets/200d8bbe-c054-4d8b-abf0-81299c33e8f5" />
+
 --Future Goals--
 -Add tooltips to fields
 -Add button to clear list
